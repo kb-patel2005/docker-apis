@@ -1,22 +1,9 @@
 version: '3.8'
 services:
-  mongodb:
-    image: mongo:6.0
-    container_name: myecommarce
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-
   springboot-app:
     build: .
     container_name: springboot-app
     ports:
       - "8080:8080"
-    depends_on:
-      - mongodb
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb+srv://krishpatel1181_db_user:hC1HcH69aXywVsxs@cluster0.fzyml5i.mongodb.net/?appName=Cluster0
-
-volumes:
-  mongo_data:
+      SPRING_DATA_MONGODB_URI: mongodb+srv://<username>:<password>@cluster0.fzyml5i.mongodb.net/<dbname>?retryWrites=true&w=majority
