@@ -6,4 +6,4 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb+srv://<username>:<password>@cluster0.fzyml5i.mongodb.net/<dbname>?retryWrites=true&w=majority
+      SPRING_DATA_MONGODB_URI: mongodb+srv://krishpatel1181_db_user:hC1HcH69aXywVsxs@cluster0.fzyml5i.mongodb.net/ecommarce?appName=Cluster0
