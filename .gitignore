@@ -2,9 +2,6 @@
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# Ignore all target folders
-target/
-
 # Allow demo.jar inside root target
 !target/demo-0.0.1-SNAPSHOT.jar
 
