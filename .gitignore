@@ -6,7 +6,7 @@
 target/
 
 # Allow demo.jar inside root target
-!target/demo.jar
+!target/demo-0.0.1-SNAPSHOT.jar
 
 ### STS ###
 .apt_generated
