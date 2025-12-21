@@ -6,7 +6,9 @@ import com.ecommarce.demo.entity.Product;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+@EnableMongoRepositories
 public interface ProductRepo extends MongoRepository<Product, String> {
 
     // Find userId by email and password
