@@ -17,4 +17,6 @@ public interface ProductServices{
 
     public Product getById(String Id);
 
+    public Object getImage(String id);
+
 }

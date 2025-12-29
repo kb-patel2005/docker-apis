@@ -1,9 +1,13 @@
 package com.ecommarce.demo.controller;
 
+import java.io.IOException;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,7 @@ import com.ecommarce.demo.dao.ProductServices;
 import com.ecommarce.demo.dao.UserRepo;
 import com.ecommarce.demo.entity.Product;
 import jakarta.servlet.annotation.MultipartConfig;
+import org.springframework.http.MediaType;
 
 @RestController
 @CrossOrigin("*")
@@ -60,6 +65,23 @@ public class ProductController {
         prepo.save(product);
         return product;
     }
+
+    @GetMapping("/image/{id}")
+    public ResponseEntity<?> getImage(@PathVariable String id) {
+        try {
+            var resource = service.getImage(id);
+            if (resource == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(((MultipartFile) resource).getContentType()))
+                    .body(((MultipartFile) resource).getInputStream().readAllBytes());
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error retrieving image");
+        }
+    }
+
 
     @DeleteMapping("/deleteProduct")
     public String deleteProduct(@RequestBody Product p) {

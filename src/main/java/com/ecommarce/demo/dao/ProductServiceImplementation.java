@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.util.List;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ecommarce.demo.entity.Product;
+import com.mongodb.client.gridfs.model.GridFSFile;
 
 import jakarta.servlet.annotation.MultipartConfig;
 
@@ -61,6 +63,16 @@ public class ProductServiceImplementation implements ProductServices {
             System.out.println("Error saving product: " + e.getMessage());
         }
     }
+
+    public GridFsResource getImage(String id) {
+        GridFSFile file = gridFsTemplate.findOne(
+                new org.springframework.data.mongodb.core.query.Query(
+                        org.springframework.data.mongodb.core.query.Criteria.where("_id").is(new ObjectId(id))
+                )
+        );
+        return gridFsTemplate.getResource(file);
+    }
+
 
     @Override
     public void setimage(Product p, MultipartFile image) {
