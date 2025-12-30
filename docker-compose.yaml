@@ -1,9 +1,0 @@
-version: '3.8'
-services:
-  springboot-app:
-    build: .
-    container_name: springboot-app
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATA_MONGODB_URI: mongodb+srv://krishpatel1181_db_user:hC1HcH69aXywVsxs@cluster0.fzyml5i.mongodb.net/ecommarce?appName=Cluster0

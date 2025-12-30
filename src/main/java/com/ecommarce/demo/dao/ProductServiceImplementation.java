@@ -80,7 +80,8 @@ public class ProductServiceImplementation implements ProductServices {
             ObjectId fileId = gridFsTemplate.store(
                     image.getInputStream(),
                     image.getOriginalFilename(),
-                    image.getContentType());
+                    image.getContentType(),
+                    image.getBytes());
 
             if (p != null) {
                 p.setImgName(image.getOriginalFilename());

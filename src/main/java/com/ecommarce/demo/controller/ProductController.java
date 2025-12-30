@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -67,20 +68,21 @@ public class ProductController {
     }
 
     @GetMapping("/image/{id}")
-    public ResponseEntity<?> getImage(@PathVariable String id) {
-        try {
-            var resource = service.getImage(id);
-            if (resource == null) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok()
-                    .contentType(MediaType.parseMediaType(((MultipartFile) resource).getContentType()))
-                    .body(((MultipartFile) resource).getInputStream().readAllBytes());
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error retrieving image");
+public ResponseEntity<?> getImage(@PathVariable String id) {
+    try {
+        GridFsResource resource = (GridFsResource) service.getImage(id);
+        if (resource == null) {
+            return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(resource.getContentType()))
+                .body(resource.getInputStream().readAllBytes());
+    } catch (IOException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error retrieving image");
     }
+}
 
 
     @DeleteMapping("/deleteProduct")
