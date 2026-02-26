@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.http.HttpStatus;
@@ -85,7 +86,6 @@ public class ProductController {
         }
     }
 
-
     @DeleteMapping("/deleteProduct")
     public String deleteProduct(@RequestBody Product p) {
         prepo.deleteById(p.getpId());
@@ -107,8 +107,13 @@ public class ProductController {
     // }
 
     @GetMapping("/products")
-    public Page<Product> getAllProducts(Pageable pageable) {
-        return prepo.findAll(pageable);
+    public Page<Product> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        Pageable pages = PageRequest.of(page, size);
+
+        return prepo.findAll(pages);
     }
 
     @PutMapping("/update")

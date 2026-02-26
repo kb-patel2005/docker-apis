@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.ecommarce.demo.entity.Product;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -26,4 +28,7 @@ public interface ProductRepo extends MongoRepository<Product, String> {
     // Find all products by userId
     @Query(value = "{ 'user_user_id' : ?0 }")
     List<Product> searchProducts(String uid);
+
+    Page<Product> findAll(Pageable pageable);
+
 }
